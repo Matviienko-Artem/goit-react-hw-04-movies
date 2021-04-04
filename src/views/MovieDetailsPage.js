@@ -24,20 +24,20 @@ class MovieDetailsPage extends Component {
 
   render() {
     const { original_title, tagline, poster_path } = this.state.movies;
-    const { match } = this.props;
+    const { url, path } = this.props.match;
 
     return (
       <>
         <h2>{original_title}</h2>
         <h3>{tagline}</h3>
         <img src={poster_path} alt={original_title} />
-        <Link to={`${match.url}/cast`}>Cast</Link>
-        <Link to={`${match.url}/reviews`}>Reviews</Link>
+        <Link to={`${url}/cast`}>Cast</Link>
+        <Link to={`${url}/reviews`}>Reviews</Link>
+        <Route path={`${path}/cast`} render={prop => <Cast {...prop} />} />
         <Route
-          path={`${match.path}/cast`}
-          render={prop => <Cast {...prop} />}
+          path={`${path}/reviews`}
+          render={prop => <Reviews {...prop} />}
         />
-        <Route path={`${match.path}/reviews`} component={Reviews} />
       </>
     );
   }
