@@ -2,3 +2,60 @@
 реализовать кнопку назад
 доделать localstorage
 
+1. npx create-react-app .
+2. Удалить всё в папке src кроме index.js App.js
+3. npm install --save-dev prop-types
+4. npm install --save-dev prettier husky lint-staged
+5. Создать в корне нашего проета файл .huskyrc и закинуть в него 
+
+{
+  "hooks": {
+    "pre-commit": "lint-staged"
+  }
+}
+
+6. Создать в корне нашего проета файл .lintstagedrc и закинуть в него 
+  
+{
+  "src/**/*.{json,css,scss,md}": ["prettier --write"],
+  "src/**/*.{js,jsx,ts,tsx}": ["prettier --write", "eslint --fix"]
+}
+
+7. Создать в корне нашего проета файл .prettierrc.json и закинуть в него 
+
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid",
+  "proseWrap": "always"
+}
+
+8. Проверяем настройки редактора что бы в settings.json codeActionsOnSave был в true (должно уже быть)
+
+{
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
+
+9. npm install modern-normalize
+10 Заимпортировать normalize в index.js  import 'modern-normalize/modern-normalize.css';
+11. В package.json добавляем свойсво "homepage": "https://Matviienko-Artem.github.io/my-app",
+вместо my-app вставить имя репозитория куда хочешьь сделать деплой
+12. npm install --save gh-pages
+13.   "scripts": {
++   "predeploy": "npm run build",
++   "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+14. npm install axios
+15. npm install react-router-dom
+
