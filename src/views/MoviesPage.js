@@ -54,7 +54,7 @@ class MoviesPage extends Component {
             <span></span>
           </button>
         </form>
-        <List movies={movies} />
+        <List movies={movies} query={query} />
       </>
     );
   }

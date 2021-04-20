@@ -2,13 +2,14 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import styles from '../List/List.module.css';
 
-const List = ({ movies, location }) => {
+const List = ({ movies, location, query }) => {
+  console.log(query)
   return (
     <ul className={styles.list}>
       {movies.map(({ id, title, name, poster_path }) => (
         <li key={id} className={styles.item}>
           <Link
-            to={{ pathname: `/movies/${id}`, state: { from: location } }}
+            to={{ pathname: `/movies/${id}`, search:`?query=${query}`, state: { from: location } }}
             className={styles.link}
           >
             <img
