@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Switch, NavLink } from 'react-router-dom';
-// import axios from 'axios';
+import { Route, Switch } from 'react-router-dom';
 import HomePage from './views/HomePage';
 import MoviesPage from './views/MoviesPage';
 import MovieDetailsPage from './views/MovieDetailsPage';
+import AppBar from './components/AppBar/AppBar';
+import routes from './routes';
+import './styles/global.css';
 
 class App extends Component {
   state = {};
@@ -11,21 +13,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ul>
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/movies">Movies</NavLink>
-          </li>
-        </ul>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/movies" component={MoviesPage} />
-          <Route path="/movies/:movieId" component={MovieDetailsPage} />
+        <AppBar />
+        <div className="box">
+          <Switch>
+            <Route exact path={routes.home} component={HomePage} />
+            <Route exact path={routes.movies} component={MoviesPage} />
+            <Route path={routes.movieDetails} component={MovieDetailsPage} />
 
-          <Route component={HomePage} />
-        </Switch>
+            <Route component={HomePage} />
+          </Switch>
+        </div>
       </div>
     );
   }

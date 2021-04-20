@@ -1,0 +1,12 @@
+body {
+  background: linear-gradient(135deg, #6e7078, #515156);
+}
+h2 {
+  color: tomato;
+  text-align: center;
+}
+
+.box {
+  padding-left: 70px;
+  padding-right: 70px;
+}

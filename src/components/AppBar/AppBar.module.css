@@ -1,0 +1,32 @@
+header {
+  background: linear-gradient(135deg, #167dd1, #49ca16);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.list {
+  margin: 0;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  list-style-type: none;
+}
+
+.item {
+  font-size: 20px;
+}
+
+.item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.active_link {
+  color: tomato;
+}

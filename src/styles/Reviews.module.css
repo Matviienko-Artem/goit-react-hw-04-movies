@@ -1,0 +1,13 @@
+.title {
+  color: #fff;
+}
+.list {
+  padding: 0;
+}
+
+.item {
+  margin-top: 10px;
+  list-style: none;
+  border: tomato 1px solid;
+  border-radius: 5px;
+}

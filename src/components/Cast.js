@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import styles from '../styles/Cast.module.css';
 
 class Cast extends Component {
   state = {
@@ -17,22 +18,32 @@ class Cast extends Component {
 
     this.setState({ cast: searchReviews.data.cast });
 
-    console.log(this.props);
+    console.log(this.state.cast);
   }
 
   render() {
+    const { cast } = this.state;
+
     return (
       <>
-        <h2>Это страница актерского состава</h2>
-        <ul>
-          {this.state.cast.map(actors => (
-            <>
-              <li key={actors.id}>
-                {actors.name}
-                <img src={actors.profile_path} alt={actors.name} />
-              </li>
-            </>
-          ))}
+        <h2 className={styles.title}>Это страница актерского состава</h2>
+        <ul className={styles.box}>
+          {cast.map(actor => {
+            const actorsImg = `https://image.tmdb.org/t/p/w500${actor.profile_path}`;
+
+            return (
+              <>
+                <li key={actor.id} className={styles.item}>
+                  <p>{actor.name}</p>
+                  <img
+                    src={actorsImg}
+                    alt={actor.name}
+                    className={styles.img}
+                  />
+                </li>
+              </>
+            );
+          })}
         </ul>
       </>
     );

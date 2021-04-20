@@ -1,0 +1,36 @@
+.title {
+  text-align: left;
+  font-size: 40px;
+  color: #fff;
+}
+
+.rating {
+  font-size: 20px;
+}
+
+.box {
+  display: flex;
+}
+
+.poster {
+  width: 350px;
+}
+
+.overview {
+  margin: 0;
+  padding: 10px;
+}
+
+.link {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  margin-right: 15px;
+  margin-top: 20px;
+}
+
+.active_link {
+  color: tomato;
+}
