@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fetchTheMovie from '../services/themoviedb';
 import React, { Component } from 'react';
 import styles from '../styles/Reviews.module.css';
 
@@ -8,17 +8,14 @@ class Reviews extends Component {
   };
 
   async componentDidMount() {
-    const API_KEY = `d407875648143dbc537f3d16fab2b882`;
-
     const { movieId } = this.props.match.params;
 
-    const searchReviews = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${API_KEY}&language=en-US&page=1`,
-    );
-
-    this.setState({ reviews: searchReviews.data.results });
-
-    console.log(this.state.reviews);
+    fetchTheMovie
+      .fetchReviews(movieId)
+      .then(({ data }) => {
+        this.setState({ reviews: data.results });
+      })
+      .catch(() => console.log(`Тут ошибочка в отзывах о фильме`));
   }
 
   render() {

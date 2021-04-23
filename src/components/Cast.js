@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fetchTheMovie from '../services/themoviedb';
 import React, { Component } from 'react';
 import styles from '../styles/Cast.module.css';
 
@@ -8,17 +8,14 @@ class Cast extends Component {
   };
 
   async componentDidMount() {
-    const API_KEY = `d407875648143dbc537f3d16fab2b882`;
-
     const { movieId } = this.props.match.params;
 
-    const searchReviews = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`,
-    );
-
-    this.setState({ cast: searchReviews.data.cast });
-
-    console.log(this.state.cast);
+    fetchTheMovie
+      .fetchCast(movieId)
+      .then(({ data }) => {
+        this.setState({ cast: data.cast });
+      })
+      .catch(() => console.log(`Тут ошибочка в касте актёров `));
   }
 
   render() {

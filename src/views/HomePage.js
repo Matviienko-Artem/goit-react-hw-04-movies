@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import fetchTheMovie from '../services/themoviedb';
 import List from '../components/List/List';
 
 class HomePage extends Component {
@@ -8,12 +8,13 @@ class HomePage extends Component {
   };
 
   async componentDidMount() {
-    const API_KEY = `d407875648143dbc537f3d16fab2b882`;
-
-    axios
-      .get(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`)
+    fetchTheMovie
+      .fetchTopWeek()
       .then(({ data }) => {
         this.setState({ movies: data.results });
+      })
+      .catch(() => {
+        console.log('Ошибка при запросе топа за неделю');
       });
   }
 

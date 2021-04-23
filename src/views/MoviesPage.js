@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import fetchTheMovie from '../services/themoviedb';
 import List from '../components/List/List';
 import styles from '../styles/MoviePage.module.css';
 
@@ -9,17 +9,25 @@ class MoviesPage extends Component {
     query: '',
   };
 
-  fetchMovies = () => {
-    const API_KEY = `d407875648143dbc537f3d16fab2b882`;
-    const QUERY = this.state.query;
+  componentDidMount() {
+    const { location } = this.props;
 
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${QUERY}`,
-      )
-      .then(({ data }) => {
-        this.setState({ movies: data.results });
-      });
+    if (location.search !== '') {
+      this.fetchMoviesBySearch(location.search.slice(7));
+    }
+  }
+
+  fetchMoviesBySearch = search => {
+    if (search !== '') {
+      fetchTheMovie
+        .fetchBySearch(search)
+        .then(({ data }) => {
+          this.setState({ movies: data.results });
+        })
+        .catch(() => {
+          console.log('Ошибка при запросе по ключевому слову');
+        });
+    }
   };
 
   handleChange = e => {
@@ -29,7 +37,14 @@ class MoviesPage extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.fetchMovies();
+    const { location, history } = this.props;
+    const { query } = this.state;
+
+    if (query !== '') {
+      location.search = `?query=${query}`;
+      history.push(location.search);
+      this.fetchMoviesBySearch(query);
+    }
 
     this.setState({ query: '' });
   };
@@ -54,7 +69,7 @@ class MoviesPage extends Component {
             <span></span>
           </button>
         </form>
-        <List movies={movies} query={query} />
+        <List movies={movies} />
       </>
     );
   }

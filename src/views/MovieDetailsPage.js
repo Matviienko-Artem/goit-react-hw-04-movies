@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { Route, NavLink } from 'react-router-dom';
-import axios from 'axios';
+import fetchTheMovie from '../services/themoviedb';
 import routes from '../routes';
-import Cast from '../components/Cast';
-import Reviews from '../components/Reviews';
 import styles from '../styles/MovieDetailsPage.module.css';
+
+const Cast = lazy(() =>
+  import('../components/Cast' /* webpackChunkName: "cast-page" */),
+);
+const Reviews = lazy(() =>
+  import('../components/Reviews' /* webpackChunkName: "reviews-page" */),
+);
 
 class MovieDetailsPage extends Component {
   state = {
@@ -12,23 +17,20 @@ class MovieDetailsPage extends Component {
   };
 
   componentDidMount() {
-    const API_KEY = `d407875648143dbc537f3d16fab2b882`;
     const { movieId } = this.props.match.params;
 
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`,
-      )
+    fetchTheMovie
+      .fetchById(movieId)
       .then(({ data }) => {
         this.setState({ movies: data });
       })
-      .catch(error => console.log(`Тут ошибочка ${error}`));
+      .catch(() => console.log(`Ошибка при запросе по детализации фильма`));
   }
 
   handleGoBack = () => {
     const { location, history } = this.props;
+
     if (location.state && location.state.from) {
-      console.log(location)
       return history.push(location.state.from);
     }
 
@@ -79,11 +81,10 @@ class MovieDetailsPage extends Component {
         >
           Reviews
         </NavLink>
-        <Route path={`${path}/cast`} render={prop => <Cast {...prop} />} />
-        <Route
-          path={`${path}/reviews`}
-          render={prop => <Reviews {...prop} />}
-        />
+        <Suspense>
+          <Route path={`${path}/cast`} component={Cast} />
+          <Route path={`${path}/reviews`} component={Reviews} />
+        </Suspense>
       </>
     );
   }
