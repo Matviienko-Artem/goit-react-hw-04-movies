@@ -46,6 +46,8 @@ class MovieDetailsPage extends Component {
       vote_average,
     } = this.state.movies;
 
+    const { location } = this.props;
+
     const { url, path } = this.props.match;
 
     const imgUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;
@@ -67,7 +69,10 @@ class MovieDetailsPage extends Component {
 
         <NavLink
           exact
-          to={`${url}/cast`}
+          to={{
+            pathname: url + '/cast',
+            state: { from: location.state.from },
+          }}
           className={styles.link}
           activeClassName={styles.active_link}
         >
@@ -75,15 +80,18 @@ class MovieDetailsPage extends Component {
         </NavLink>
         <NavLink
           exact
-          to={`${url}/reviews`}
+          to={{
+            pathname: url + '/reviews',
+            state: { from: location.state.from },
+          }}
           className={styles.link}
           activeClassName={styles.active_link}
         >
           Reviews
         </NavLink>
         <Suspense>
-          <Route path={`${path}/cast`} component={Cast} />
-          <Route path={`${path}/reviews`} component={Reviews} />
+          <Route path={path + '/cast'} component={Cast} />
+          <Route path={path + '/reviews'} component={Reviews} />
         </Suspense>
       </>
     );
